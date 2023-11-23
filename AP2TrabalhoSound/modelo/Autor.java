@@ -14,6 +14,12 @@ public class Autor {
         this.nomeArtistico = nomeArtistico;
     }
 
+        public Autor(String cpf, String nomeOriginal, String nomeArtistico) {
+        this.cpf = cpf;
+        this.nomeOriginal = nomeOriginal;
+        this.nomeArtistico = nomeArtistico;
+    }
+
     public int getIdAutor() {
         return idAutor;
     }
