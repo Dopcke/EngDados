@@ -24,6 +24,7 @@ public class Playlist {
         this.musicas = musicas;
     }
 
+
     public int idPlaylist(){
         return idPlaylist;
     }
@@ -60,6 +61,8 @@ public class Playlist {
         this.musicas = musicas;
     }
 
+    
+
     @Override
     public String toString() {
         return "Playlist{" +
@@ -68,5 +71,12 @@ public class Playlist {
                 ", categoriaPermitida=" + categoriaPermitida +
                 ", musicas=" + musicas +
                 '}';
+    }
+    public static void ConfereCateforia(Musica musica, ArrayList<Musica> musicas, Playlist playlist){
+        if (musica.getCategoria() == playlist.getCategoriaPermitida()){
+            musicas.add(musica);
+        } else{
+            System.err.println("Não é do mesmo gênero");
+        }
     }
 }

@@ -15,15 +15,67 @@ import modelo.Playlist;
 public class Principal {
 
     public static void main(String[] args) {
-        // Criação de objetos de exemplo
-        Autor autor1 = new Autor("Artista 1", "Autor Original 1", "12345678901");
-        Autor autor2 = new Autor("Artista 2", "Autor Original 2", "23456789012");
+        Categoria POP = new Categoria(1, "POP");
+        Categoria Samba = new Categoria(2, "Samba");
+        Categoria Mpb = new Categoria(3, "Mpb");
+        Categoria Forro = new Categoria(4, "Forro");
+        Categoria Pagode = new Categoria(5, "Pagode");
+        Categoria Rock = new Categoria(6, "Rock");
 
-        Categoria categoria1 = new Categoria("Categoria 1");
-        Categoria categoria2 = new Categoria("Categoria 2");
+        Autor autor1 = new Autor("Daniel Studart", "Stu", "00000000001");
+        Autor autor2 = new Autor("Davi Jacob", "DaviJac", "00000000002");
+        Autor autor3 = new Autor("João Paulo", "JP Dopcke", "00000000003");
+        Autor autor4 = new Autor("Douglas", "Big Dog", "00000000004");
+        Autor autor5 = new Autor("Talita", "Tatá Wernek", "00000000005");
+        Autor autor6 = new Autor("Clayton Gomes", "Clayton", "00000000006");
+        Autor autor7 = new Autor("Ubiratan", "Um Bira", "00000000007");
 
-        Musica musica1 = new Musica("Música 1", "Letra da Música 1", "2023-01-01", categoria1, 200, new ArrayList<>());
-        Musica musica2 = new Musica("Música 2", "Letra da Música 2", "2023-02-02", categoria2, 180, new ArrayList<>());
+        ArrayList<Autor> Lista_Autores1 = new ArrayList<Autor>();
+        Lista_Autores1.add(autor1);
+        Lista_Autores1.add(autor2);
+        Lista_Autores1.add(autor5);
+        
+        ArrayList<Autor> Lista_Autores2 = new ArrayList<Autor>();
+        Lista_Autores2.add(autor3);
+        Lista_Autores2.add(autor5);
+        
+        ArrayList<Autor> Lista_Autores3 = new ArrayList<Autor>();
+        Lista_Autores3.add(autor4);
+     
+        
+        ArrayList<Autor> Lista_Autores4 = new ArrayList<Autor>();
+        Lista_Autores4.add(autor7);
+        Lista_Autores4.add(autor6);
+
+        Musica musica1 = new Musica("Gang Gang", "abcde", "2003-07-22", Pagode, 230, Lista_Autores1);
+        Musica musica2 = new Musica("Bang Bang da Anitta", "abcde", "2003-07-22", Samba, 230, Lista_Autores2);
+        Musica musica3 = new Musica("Braga Samba", "abcde", "2003-07-22", Mpb, 210, Lista_Autores3);
+        Musica musica4 = new Musica("Vai malandra", "abcde", "2003-07-22", Forro, 190, Lista_Autores4);
+        Musica musica5 = new Musica("Pé de pano", "abcde", "2003-07-22", Rock, 522, Lista_Autores1);
+        Musica musica6 = new Musica("Sítio do Pica-Pau", "abcde", "2003-07-22", Forro, 200, Lista_Autores2);
+        Musica musica7 = new Musica("Naquela Mesa", "abcde", "2003-07-22", Mpb, 90, Lista_Autores3);
+        Musica musica8 = new Musica("Não era pra ser", "abcde", "2003-07-22", Rock, 100, Lista_Autores4);
+
+        ArrayList<Musica> Conjunto1 = new ArrayList<Musica>();
+        ArrayList<Musica> Conjunto2 = new ArrayList<Musica>();
+        ArrayList<Musica> Conjunto3 = new ArrayList<Musica>();
+
+
+        Playlist playlist1 = new Playlist("2003-07-22", "Meus MPBS", Mpb, Conjunto1);
+
+        Playlist.ConfereCateforia(musica1, Conjunto1, playlist1);
+        Playlist.ConfereCateforia(musica7, Conjunto1, playlist1);
+        Playlist.ConfereCateforia(musica3, Conjunto1, playlist1);
+        
+        Playlist playlist2 = new Playlist("2019-09-20", "Meus Forros", Forro, Conjunto2);
+        Playlist.ConfereCateforia(musica4, Conjunto2, playlist2);
+        Playlist.ConfereCateforia(musica6, Conjunto2, playlist2);
+        Playlist.ConfereCateforia(musica7, Conjunto2, playlist2);
+
+        Playlist playlist3 = new Playlist("2003-10-17", "Meus Rocks", Rock, Conjunto3);
+
+        Playlist.ConfereCateforia(musica5, Conjunto3, playlist3);
+        Playlist.ConfereCateforia(musica8, Conjunto3, playlist3);
 
 
         // Inicialização da conexão com o banco de dados
@@ -32,16 +84,23 @@ public class Principal {
             AutorDAO autorDAO = new AutorDAO(connection);
             CategoriaDAO categoriaDAO = new CategoriaDAO(connection);
             MusicaDAO musicaDAO = new MusicaDAO(connection);
+            PlaylistDAO playlistDAO = new PlaylistDAO(connection);
 
             // Inserção de dados no banco
             autorDAO.insert(autor1);
             autorDAO.insert(autor2);
 
-            categoriaDAO.insert(categoria1);
-            categoriaDAO.insert(categoria2);
+            categoriaDAO.insert(POP);
+            categoriaDAO.insert(Rock);
 
             musicaDAO.insert(musica1);
             musicaDAO.insert(musica2);
+            musicaDAO.insert(musica3);
+            musicaDAO.insert(musica4);
+
+            playlistDAO.insert(playlist1);
+            playlistDAO.insert(playlist2);
+            playlistDAO.insert(playlist3);
 
 
             // Consulta de dados do banco

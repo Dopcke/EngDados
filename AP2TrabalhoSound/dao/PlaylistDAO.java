@@ -124,12 +124,12 @@ public class PlaylistDAO {
     // Método auxiliar para associar músicas à playlist
     private void associateMusicsToPlaylist(Playlist playlist) {
         try {
-            String sql = "INSERT INTO playlist_musica (playlist_titulo, musica_titulo) VALUES (?, ?)";
-
+            String sql = "INSERT INTO musica_playlist (fk_musica, fk_playlist) VALUES ((SELECT id_musica FROM musica WHERE titulo = ?), ?)";
+    
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 for (Musica musica : playlist.getMusicas()) {
-                    pstm.setString(1, playlist.getTitulo());
-                    pstm.setString(2, musica.getTitulo());
+                    pstm.setString(1, musica.getTitulo());
+                    pstm.setInt(2, playlist.idPlaylist()); 
                     pstm.addBatch();
                 }
                 pstm.executeBatch();
@@ -138,13 +138,14 @@ public class PlaylistDAO {
             throw new RuntimeException(e);
         }
     }
+    
 
     // Método auxiliar para recuperar as músicas associadas à playlist
     private ArrayList<Musica> getMusicsFromPlaylist(String tituloPlaylist) {
         ArrayList<Musica> musicas = new ArrayList<>();
 
         try {
-            String sql = "SELECT musica_titulo FROM playlist_musica WHERE playlist_titulo = ?";
+            String sql = "SELECT musica_titulo FROM musica_playlist WHERE playlist.titulo = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, tituloPlaylist);
@@ -169,7 +170,7 @@ public class PlaylistDAO {
     // Método auxiliar para desassociar músicas de uma playlist
     private void dissociateMusicsFromPlaylist(Playlist playlist) {
         try {
-            String sql = "DELETE FROM playlist_musica WHERE playlist_titulo = ?";
+            String sql = "DELETE FROM musica_playlist WHERE playlist.titulo = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, playlist.getTitulo());
