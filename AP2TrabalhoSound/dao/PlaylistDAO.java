@@ -45,7 +45,7 @@ public class PlaylistDAO {
 
     public Playlist selectByTitulo(String titulo) {
         try {
-            String sql = "SELECT data_criacao, categoria FROM playlist WHERE titulo = ?";
+            String sql = "SELECT id_categoria, data_criacao, categoria FROM playlist WHERE titulo = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, titulo);
@@ -55,12 +55,13 @@ public class PlaylistDAO {
                     if (rst.next()) {
                         String dataCriacao = rst.getString("data_criacao");
                         String categoriaNome = rst.getString("categoria");
+                        int idCategoria = rst.getInt("id_categoria");
                         Categoria categoria = new Categoria(categoriaNome);
 
                         // Recupera as músicas associadas à playlist
                         ArrayList<Musica> musicas = getMusicsFromPlaylist(titulo);
 
-                        return new Playlist(dataCriacao, titulo, categoria, musicas);
+                        return new Playlist(idCategoria, dataCriacao, titulo, categoria, musicas);
                     }
                 }
             }
@@ -114,7 +115,7 @@ public class PlaylistDAO {
         ArrayList<Playlist> playlists = new ArrayList<>();
 
         try {
-            String sql = "SELECT data_criacao, titulo, categoria FROM playlist";
+            String sql = "SELECT id_playlist, data_criacao, titulo, categoria FROM playlist";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.execute();
@@ -124,11 +125,12 @@ public class PlaylistDAO {
                     String titulo = rst.getString("titulo");
                     String categoriaNome = rst.getString("categoria");
                     Categoria categoria = new Categoria(categoriaNome);
+                    int idPlaylist= rst.getInt("id_playlist");
 
                     // Recupera as músicas associadas à playlist
                     ArrayList<Musica> musicas = getMusicsFromPlaylist(titulo);
 
-                    Playlist playlist = new Playlist(dataCriacao, titulo, categoria, musicas);
+                    Playlist playlist = new Playlist(idPlaylist, dataCriacao, titulo, categoria, musicas);
                     playlists.add(playlist);
                 }
             }

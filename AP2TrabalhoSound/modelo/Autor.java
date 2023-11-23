@@ -7,29 +7,30 @@ public class Autor {
     private String nomeArtistico;
     private String cpf;
 
-    public Autor(int idAutor, String cpf, String nomeOriginal, String nomeArtistico) {
+    public Autor(int idAutor, String nomeOriginal, String nomeArtistico, String cpf) {
         this.idAutor = idAutor;
-        this.cpf = cpf;
         this.nomeOriginal = nomeOriginal;
         this.nomeArtistico = nomeArtistico;
+        this.cpf = cpf;
+    }
+    public Autor(String nomeOriginal, String nomeArtistico, String cpf) {
+        this.nomeOriginal = nomeOriginal;
+        this.nomeArtistico = nomeArtistico;
+        this.cpf = cpf;
     }
 
-    public int getIdAutor() {
+    public int getIdAutor(){
         return idAutor;
     }
 
-    public void setIdAutor(int idAutor) {
-        this.idAutor = idAutor;
-    }
-
-    public String getCpf() {
+    public String getCpf(){
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(String cpf){
         this.cpf = cpf;
     }
-
+    
     public String getNomeOriginal() {
         return nomeOriginal;
     }
@@ -37,6 +38,7 @@ public class Autor {
     public void setNomeOriginal(String nomeOriginal) {
         this.nomeOriginal = nomeOriginal;
     }
+
 
     public String getNomeArtistico() {
         return nomeArtistico;
@@ -46,8 +48,10 @@ public class Autor {
         this.nomeArtistico = nomeArtistico;
     }
 
+
+
     @Override
     public String toString() {
-        return "{ 'autor': {'id_autor': '" + this.idAutor + "','nome_original': '" + this.nomeOriginal + "', 'nome_artistico': '" + this.nomeArtistico + "', 'cpf': '" + this.cpf + "'}}";
+        return "{'pessoa':{'nome_original': " + this.nomeOriginal + ", 'nome_artistico': '" + this.nomeArtistico + "', 'cpf': '" + this.cpf + "'}}";
     }
 }

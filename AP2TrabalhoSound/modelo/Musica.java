@@ -20,13 +20,17 @@ public class Musica {
         this.duracao = duracao;
         this.autores = autores;
     }
-
-    public int getIdMusica() {
-        return idMusica;
+    public Musica(String titulo, String letra, String dataLancamento, Categoria categoria, int duracao, ArrayList<Autor> autores) {
+        this.titulo = titulo;
+        this.letra = letra;
+        this.dataLancamento = dataLancamento;
+        this.categoria = categoria;
+        this.duracao = duracao;
+        this.autores = autores;
     }
 
-    public void setIdMusica(int idMusica) {
-        this.idMusica = idMusica;
+    public int getIdMusica(){
+        return idMusica;
     }
 
     public String getTitulo() {
@@ -80,7 +84,6 @@ public class Musica {
     @Override
     public String toString() {
         return "Musica{" +
-                "id_categoria=" + idMusica +
                 "titulo='" + titulo + '\'' +
                 ", letra='" + letra + '\'' +
                 ", dataLancamento='" + dataLancamento + '\'' +

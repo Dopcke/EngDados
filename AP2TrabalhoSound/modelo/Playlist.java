@@ -3,16 +3,29 @@ package modelo;
 import java.util.ArrayList;
 
 public class Playlist {
+    private int idPlaylist;
     private String dataCriacao;
     private String titulo;
     private Categoria categoriaPermitida;
     private ArrayList<Musica> musicas;
+
+    public Playlist(int idPlaylist, String dataCriacao, String titulo, Categoria categoriaPermitida, ArrayList<Musica> musicas) {
+        this.idPlaylist = idPlaylist;
+        this.dataCriacao = dataCriacao;
+        this.titulo = titulo;
+        this.categoriaPermitida = categoriaPermitida;
+        this.musicas = musicas;
+    }
 
     public Playlist(String dataCriacao, String titulo, Categoria categoriaPermitida, ArrayList<Musica> musicas) {
         this.dataCriacao = dataCriacao;
         this.titulo = titulo;
         this.categoriaPermitida = categoriaPermitida;
         this.musicas = musicas;
+    }
+
+    public int idPlaylist(){
+        return idPlaylist;
     }
 
     public String getDataCriacao() {

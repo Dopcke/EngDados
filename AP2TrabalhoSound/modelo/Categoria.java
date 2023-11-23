@@ -8,13 +8,12 @@ public class Categoria {
         this.idCategoria = idCategoria;
         this.nome = nome;
     }
-
-    public int getIdCategoria() {
-        return idCategoria;
+    public Categoria(String nome) {
+        this.nome = nome;
     }
 
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
+    public int getIdCategoria(){
+        return idCategoria;
     }
 
     public String getNome() {
@@ -28,8 +27,7 @@ public class Categoria {
     @Override
     public String toString() {
         return "Categoria{" +
-                "id_categoria=" + idCategoria +
-                ", nome='" + nome + '\'' +
+                "nome='" + nome + '\'' +
                 '}';
     }
 }

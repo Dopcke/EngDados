@@ -19,16 +19,16 @@ public class CategoriaDAO {
 
     public void insert(Categoria categoria) {
         try {
-            String sql = "INSERT INTO Categoria (nome) VALUES (?)";
+            String sql = "INSERT INTO categoria (nome) VALUES (?)";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 pstm.setString(1, categoria.getNome());
 
-                pstm.executeUpdate();
+                pstm.execute();
 
                 try (ResultSet rst = pstm.getGeneratedKeys()) {
                     while (rst.next()) {
-                        categoria.setIdCategoria(rst.getInt(1)); 
+                        // Pode ser omitido se não estiver usando auto-incremento
                     }
                 }
             }
@@ -39,7 +39,7 @@ public class CategoriaDAO {
 
     public Categoria selectByNome(String nome) {
         try {
-            String sql = "SELECT id_categoria, nome FROM Categoria WHERE nome = ?";
+            String sql = "SELECT nome FROM categoria WHERE nome = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, nome);
@@ -47,8 +47,7 @@ public class CategoriaDAO {
 
                 try (ResultSet rst = pstm.getResultSet()) {
                     if (rst.next()) {
-                        int id = rst.getInt("id_categoria");
-                        return new Categoria(id, nome);
+                        return new Categoria(nome);
                     }
                 }
             }
@@ -61,27 +60,27 @@ public class CategoriaDAO {
 
     public void update(Categoria categoria) {
         try {
-            String sql = "UPDATE Categoria SET nome = ? WHERE id_categoria = ?";
+            String sql = "UPDATE categoria SET nome = ? WHERE nome = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, categoria.getNome());
-                pstm.setInt(2, categoria.getIdCategoria());
+                pstm.setString(2, categoria.getNome());
 
-                pstm.executeUpdate();
+                pstm.execute();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void delete(int id) {
+    public void delete(String nome) {
         try {
-            String sql = "DELETE FROM Categoria WHERE id_categoria = ?";
+            String sql = "DELETE FROM categoria WHERE nome = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-                pstm.setInt(1, id);
+                pstm.setString(1, nome);
 
-                pstm.executeUpdate();
+                pstm.execute();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -92,15 +91,14 @@ public class CategoriaDAO {
         ArrayList<Categoria> categorias = new ArrayList<>();
 
         try {
-            String sql = "SELECT id_categoria, nome FROM Categoria";
+            String sql = "SELECT nome FROM categoria";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.execute();
                 ResultSet rst = pstm.getResultSet();
                 while (rst.next()) {
-                    int id = rst.getInt("id_categoria");
                     String nome = rst.getString("nome");
-                    Categoria categoria = new Categoria(id, nome);
+                    Categoria categoria = new Categoria(nome);
                     categorias.add(categoria);
                 }
             }
