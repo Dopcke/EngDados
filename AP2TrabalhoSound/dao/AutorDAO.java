@@ -104,10 +104,10 @@ public class AutorDAO {
             ResultSet rst = pstm.getResultSet();
             while (rst.next()) {
                 int idAutor = rst.getInt("id_autor");
-                String cpf = rst.getString("cpf");
                 String nomeOriginal = rst.getString("nome_original");
-                String nomeArtistico = rst.getString("nome_artistico");
-                Autor autor = new Autor(idAutor, cpf, nomeOriginal, nomeArtistico);
+                String nomeArtistico = rst.getString("nome_artistico");               
+                String cpf = rst.getString("cpf");
+                Autor autor = new Autor(idAutor, nomeOriginal, nomeArtistico, cpf);
                 autores.add(autor);
             }
         }
