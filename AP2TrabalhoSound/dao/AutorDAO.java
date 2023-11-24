@@ -52,7 +52,7 @@ public class AutorDAO {
                         int idAutor  = rst.getInt("id_autor");
                         String nomeOriginal = rst.getString("nome_original");
                         String nomeArtistico = rst.getString("nome_artistico");
-                        return new Autor(idAutor, cpf, nomeOriginal, nomeArtistico);
+                        return new Autor(idAutor, nomeOriginal, nomeArtistico, cpf);
                     }
                 }
             }

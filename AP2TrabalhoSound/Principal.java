@@ -16,16 +16,16 @@ public class Principal {
 
     public static void main(String[] args) {
         // Criação de objetos de exemplo
-        Autor autor1 = new Autor("Artista 1", "Autor Original 1", "12345678901");
-        Autor autor2 = new Autor("Artista 2", "Autor Original 2", "23456789012");
-        Autor autor3 = new Autor("Artista 3", "Autor Original 3", "90876543210");
+        Autor autor1 = new Autor("Davi", "David Guetta", "12345678901");
+        Autor autor2 = new Autor("João", "João Paulo", "23456789012");
+        Autor autor3 = new Autor("Daniel", "Studart", "90876543210");
 
-        Categoria categoria1 = new Categoria("Categoria 1");
-        Categoria categoria2 = new Categoria("Categoria 2");
-        Categoria categoria3 = new Categoria("Categoria 3");
-        Categoria categoria4 = new Categoria("Categoria 4");
-        Categoria categoria5 = new Categoria("Categoria 5");
-        Categoria categoria6 = new Categoria("Categoria 6");
+        Categoria categoria1 = new Categoria("MPB");
+        Categoria categoria2 = new Categoria("Forró");
+        Categoria categoria3 = new Categoria("Rock");
+        Categoria categoria4 = new Categoria("Pagode");
+        Categoria categoria5 = new Categoria("Samba");
+        Categoria categoria6 = new Categoria("POP");
 
         ArrayList<Autor> autores1 = new ArrayList<Autor>();
         ArrayList<Autor> autores2 = new ArrayList<Autor>();
@@ -129,7 +129,7 @@ public class Principal {
 
             // Deleção de dados
             musicaDAO.delete("Sítio do Pica-Pau");
-            categoriaDAO.delete("Categoria 6");
+            categoriaDAO.delete("POP");
             autorDAO.delete("23456789012");
             playlistDAO.delete("Meus Rocks");
 

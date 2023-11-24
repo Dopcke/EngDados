@@ -50,10 +50,29 @@ public class PlaylistDAO {
                     }
                 }
             }
+            associateMusicsToPlaylist(playlist);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    private void associateMusicsToPlaylist(Playlist playlist) {
+        try {
+            String sql = "INSERT INTO musica_playlist (fk_musica, fk_playlist) VALUES (?, ?)";
+            
+            try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+                for (Musica musica : playlist.getMusicas()) {
+                    pstm.setInt(1, musica.getIdMusica());
+                    pstm.setInt(2, playlist.getIdPlaylist());
+                    pstm.addBatch();
+                }
+                pstm.executeBatch();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
 
     public Playlist selectByTitulo(String titulo) {
         try {
@@ -139,64 +158,4 @@ public class PlaylistDAO {
         }
     }
 
-
-    // Método auxiliar para associar músicas à playlist
-    private void associateMusicsToPlaylist(Playlist playlist) {
-        try {
-            String sql = "INSERT INTO musica_playlist (fk_musica, fk_playlist) VALUES ((SELECT id_musica FROM musica WHERE titulo = ?), ?)";
-    
-            try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-                for (Musica musica : playlist.getMusicas()) {
-                    pstm.setString(1, musica.getTitulo());
-                    pstm.setInt(2, playlist.getIdPlaylist());
-                    pstm.addBatch();
-                }
-                pstm.executeBatch();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
-
-    // Método auxiliar para recuperar as músicas associadas à playlist
-    private ArrayList<Musica> getMusicsFromPlaylist(String tituloPlaylist) {
-        ArrayList<Musica> musicas = new ArrayList<>();
-
-        try {
-            String sql = "SELECT musica_titulo FROM musica_playlist WHERE playlist.titulo = ?";
-
-            try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-                pstm.setString(1, tituloPlaylist);
-                pstm.execute();
-
-                try (ResultSet rst = pstm.getResultSet()) {
-                    while (rst.next()) {
-                        String tituloMusica = rst.getString("musica_titulo");
-                        // Recupera a informação completa da música a partir do título
-                        MusicaDAO musicaDAO = new MusicaDAO(connection);
-                        Musica musica = musicaDAO.selectByTitulo(tituloMusica);
-                        musicas.add(musica);
-                    }
-                }
-            }
-            return musicas;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // Método auxiliar para desassociar músicas de uma playlist
-    private void dissociateMusicsFromPlaylist(Playlist playlist) {
-        try {
-            String sql = "DELETE FROM musica_playlist WHERE playlist.titulo = ?";
-
-            try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-                pstm.setString(1, playlist.getTitulo());
-                pstm.execute();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

@@ -29,7 +29,7 @@ public class MusicaDAO {
                 try (ResultSet rstCategoria = pstmCategoria.getResultSet()) {
                     if (rstCategoria.next()) {
                         int idCategoria = rstCategoria.getInt("id_categoria");
-
+    
                         // Agora, com o ID da categoria, é possível inserir a música
                         String sqlMusica = "INSERT INTO musica (titulo, letra, data_lancamento, fk_categoria, duracao) VALUES (?, ?, ?, ?, ?)";
                         try (PreparedStatement pstm = connection.prepareStatement(sqlMusica, Statement.RETURN_GENERATED_KEYS)) {
@@ -38,15 +38,9 @@ public class MusicaDAO {
                             pstm.setString(3, musica.getDataLancamento());
                             pstm.setInt(4, idCategoria); // Utiliza o ID da categoria
                             pstm.setInt(5, musica.getDuracao());
-
+    
                             pstm.execute();
-
-
-                            try (ResultSet rst = pstm.getGeneratedKeys()) {
-                                while (rst.next()) {
-                                    
-                                }
-                            }
+    
                         }
                     }
                 }
@@ -55,6 +49,7 @@ public class MusicaDAO {
             throw new RuntimeException(e);
         }
     }
+    
 
 
     public Musica selectByTitulo(String titulo) {
@@ -73,6 +68,7 @@ public class MusicaDAO {
                         int idCategoria = rst.getInt("fk_categoria");
                         String categoriaNome = rst.getString("nome");
                         int duracao = rst.getInt("duracao");
+                        
                         Categoria categoria = new Categoria(idCategoria, categoriaNome);
                         return new Musica(idMusica, titulo, letra, dataLancamento, categoria, duracao, new ArrayList<>());
                     }
