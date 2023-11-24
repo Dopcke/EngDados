@@ -37,6 +37,27 @@ public class CategoriaDAO {
         }
     }
 
+    public Categoria recuperaId(String nome) {
+        try {
+            String sql = "SELECT id_categoria FROM categoria WHERE nome = ?";
+
+            try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+                pstm.setString(1, nome);
+                pstm.execute();
+
+                try (ResultSet rst = pstm.getResultSet()) {
+                    if (rst.next()) {
+                        return new Categoria(nome);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
     public Categoria selectByNome(String nome) {
         try {
             String sql = "SELECT nome FROM categoria WHERE nome = ?";

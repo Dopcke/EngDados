@@ -20,6 +20,7 @@ public class Musica {
         this.duracao = duracao;
         this.autores = autores;
     }
+
     public Musica(String titulo, String letra, String dataLancamento, Categoria categoria, int duracao, ArrayList<Autor> autores) {
         this.titulo = titulo;
         this.letra = letra;

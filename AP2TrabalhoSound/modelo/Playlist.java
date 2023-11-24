@@ -24,7 +24,7 @@ public class Playlist {
         this.musicas = musicas;
     }
 
-    public int idPlaylist(){
+    public int getIdPlaylist() {
         return idPlaylist;
     }
 

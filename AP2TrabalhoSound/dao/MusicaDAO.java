@@ -26,7 +26,7 @@ public class MusicaDAO {
                 pstm.setString(1, musica.getTitulo());
                 pstm.setString(2, musica.getLetra());
                 pstm.setString(3, musica.getDataLancamento());
-                pstm.setString(4, musica.getCategoria().getNome());
+                pstm.setInt(4, musica.getCategoria().getIdCategoria());
                 pstm.setInt(5, musica.getDuracao());
 
                 pstm.execute();
