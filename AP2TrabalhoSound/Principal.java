@@ -57,7 +57,7 @@ public class Principal {
         playlist1 = new Playlist("2003-07-22", "Meus MPBS", categoria1, Conjunto1);
         
         Playlist playlist2 = new Playlist();
-        Playlist.ConfereCategoria(musica4, Conjunto2, playlist2);
+        Playlist.ConfereCategoria(musica2, Conjunto2, playlist2);
         Playlist.ConfereCategoria(musica6, Conjunto2, playlist2);
         Playlist.ConfereCategoria(musica7, Conjunto2, playlist2);
         playlist2 = new Playlist("2019-09-20", "Meus Forros", categoria2, Conjunto2);
@@ -105,12 +105,14 @@ public class Principal {
             // Consulta de dados do banco
             Autor autorConsultado = autorDAO.selectByCpf("12345678901");
             Categoria categoriaConsultada = categoriaDAO.selectByNome("Categoria 1");
-            Musica musicaConsultada = musicaDAO.selectByTitulo("Música 1");
+            Musica musicaConsultada = musicaDAO.selectByTitulo("Gang Gang");
+            Playlist playlistConsultada = playlistDAO.selectByTitulo("Meus MPBS");
 
             // Exibição dos dados consultados
             System.out.println("Autor consultado: " + autorConsultado);
             System.out.println("Categoria consultada: " + categoriaConsultada);
             System.out.println("Música consultada: " + musicaConsultada);
+            System.out.println("Playlist consultada: " + playlistConsultada);
 
             // Atualização de dados
             Autor autor1Update = new Autor(1, "Davi", "DaviJCB", "12345678912");
@@ -122,20 +124,26 @@ public class Principal {
             Musica musica3Update = new Musica(3, "BUM BUM SHAKALAKA", "a", "2023-02-02", categoria2Update, 200, autores2);
             musicaDAO.update(musica3Update);
 
+            Playlist playlist2Update = new Playlist(2, "2019-09-20", "Meus Funks", categoria2Update, Conjunto2);
+            playlistDAO.update(playlist2Update);
+
             // Deleção de dados
-            musicaDAO.delete("Musica 2");
+            musicaDAO.delete("Sítio do Pica-Pau");
             categoriaDAO.delete("Categoria 6");
             autorDAO.delete("23456789012");
+            playlistDAO.delete("Meus Rocks");
 
             // Consulta de todos os elementos das tabelas
             ArrayList<Autor> autores = autorDAO.selectAll();
             ArrayList<Categoria> categorias = categoriaDAO.selectAll();
             ArrayList<Musica> musicas = musicaDAO.selectAll();
+            ArrayList<Playlist> playlists = playlistDAO.selectAll();
 
             // Exibição de todos os elementos das tabelas
             System.out.println("\nTodos os autores: " + autores + "\n");
             System.out.println("Todas as categorias: " + categorias + "\n");
             System.out.println("Todas as músicas: " + musicas + "\n");
+            System.out.println("Todas as playlists: " + playlists + "\n");
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -29,7 +29,7 @@ public class Playlist {
     }
 
 
-    public int idPlaylist(){
+    public int getIdPlaylist(){
         return idPlaylist;
     }
 
@@ -69,8 +69,8 @@ public class Playlist {
 
     @Override
     public String toString() {
-        return "Playlist{" +
-                "dataCriacao='" + dataCriacao + '\'' +
+        return "Playlist{id_playlist=" + idPlaylist +
+                ", dataCriacao='" + dataCriacao + '\'' +
                 ", titulo='" + titulo + '\'' +
                 ", categoriaPermitida=" + categoriaPermitida +
                 ", musicas=" + musicas +
