@@ -21,7 +21,7 @@ O Software Sound é uma aplicação dedicada à gestão de informações relacio
 - **Autor:** cpf, nome original, nome artístico
 - **Categoria:** nome
 - **Música:** título, letra, data de lançamento, categoria, duração, autores.
-- **Playlist:** data de criação, título, categoria de músicas que podem ser incluídas na
+- **👹 Playlist:** data de criação, título, categoria de músicas que podem ser incluídas na
 playlist, músicas
   - Músicas inseridas na playlist devem ser de _mesma categoria_ da playlist
 
