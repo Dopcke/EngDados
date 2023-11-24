@@ -41,7 +41,7 @@ public class AutorDAO {
 
     public Autor selectByCpf(String cpf) {
         try {
-            String sql = "SELECT id_autor, nome_original, nome_artistico FROM autor WHERE cpf = ?";
+            String sql = "SELECT * FROM autor WHERE cpf = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, cpf);
@@ -49,9 +49,9 @@ public class AutorDAO {
 
                 try (ResultSet rst = pstm.getResultSet()) {
                     if (rst.next()) {
+                        int idAutor  = rst.getInt("id_autor");
                         String nomeOriginal = rst.getString("nome_original");
                         String nomeArtistico = rst.getString("nome_artistico");
-                        int idAutor = rst.getInt("id_autor");
                         return new Autor(idAutor, cpf, nomeOriginal, nomeArtistico);
                     }
                 }
@@ -65,19 +65,21 @@ public class AutorDAO {
 
     public void update(Autor autor) {
         try {
-            String sql = "UPDATE autor SET nome_original = ?, nome_artistico = ? WHERE cpf = ?";
+            String sql = "UPDATE autor SET cpf = ?, nome_original = ?, nome_artistico = ? WHERE id_autor = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-                pstm.setString(1, autor.getNomeOriginal());
-                pstm.setString(2, autor.getNomeArtistico());
-                pstm.setString(3, autor.getCpf());
+                pstm.setString(1, autor.getCpf());
+                pstm.setString(2, autor.getNomeOriginal());
+                pstm.setString(3, autor.getNomeArtistico());
+                pstm.setInt(4, autor.getIdAutor());
 
                 pstm.execute();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    } 
+
 
     public void delete(String cpf) {
         try {

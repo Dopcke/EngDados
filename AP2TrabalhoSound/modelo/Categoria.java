@@ -26,8 +26,8 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return "Categoria{" +
-                "nome='" + nome + '\'' +
+        return "Categoria{ id_categoria= " + this.idCategoria + 
+                " nome= " + this.nome + '\'' +
                 "}\n";
     }
 }

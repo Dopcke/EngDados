@@ -52,6 +52,6 @@ public class Autor {
 
     @Override
     public String toString() {
-        return "{Autor:{'nome_original': " + this.nomeOriginal + ", 'nome_artistico': '" + this.nomeArtistico + "', 'cpf': '" + this.cpf + "}\n";
+        return "{Autor:{'id_autor': " + this.idAutor + " 'nome_original': " + this.nomeOriginal + ", 'nome_artistico': '" + this.nomeArtistico + "', 'cpf': '" + this.cpf + "}\n";
     }
 }

@@ -39,7 +39,7 @@ public class CategoriaDAO {
 
     public Categoria selectByNome(String nome) {
         try {
-            String sql = "SELECT nome FROM categoria WHERE nome = ?";
+            String sql = "SELECT * FROM categoria WHERE nome = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, nome);
@@ -47,7 +47,8 @@ public class CategoriaDAO {
 
                 try (ResultSet rst = pstm.getResultSet()) {
                     if (rst.next()) {
-                        return new Categoria(nome);
+                        int idCategoria = rst.getInt("id_categoria");
+                        return new Categoria(idCategoria, nome);
                     }
                 }
             }
@@ -60,11 +61,11 @@ public class CategoriaDAO {
 
     public void update(Categoria categoria) {
         try {
-            String sql = "UPDATE categoria SET nome = ? WHERE nome = ?";
+            String sql = "UPDATE categoria SET nome = ? WHERE id_categoria = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, categoria.getNome());
-                pstm.setString(2, categoria.getNome());
+                pstm.setInt(2, categoria.getIdCategoria());
 
                 pstm.execute();
             }
@@ -91,14 +92,15 @@ public class CategoriaDAO {
         ArrayList<Categoria> categorias = new ArrayList<>();
 
         try {
-            String sql = "SELECT nome FROM categoria";
+            String sql = "SELECT * FROM categoria";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.execute();
                 ResultSet rst = pstm.getResultSet();
                 while (rst.next()) {
+                    int idCategoria  = rst.getInt("id_categoria");
                     String nome = rst.getString("nome");
-                    Categoria categoria = new Categoria(nome);
+                    Categoria categoria = new Categoria(idCategoria, nome);
                     categorias.add(categoria);
                 }
             }
@@ -107,5 +109,4 @@ public class CategoriaDAO {
             throw new RuntimeException(e);
         }
     }
-
 }

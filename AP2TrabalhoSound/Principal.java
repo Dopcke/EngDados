@@ -18,6 +18,7 @@ public class Principal {
         // Criação de objetos de exemplo
         Autor autor1 = new Autor("Artista 1", "Autor Original 1", "12345678901");
         Autor autor2 = new Autor("Artista 2", "Autor Original 2", "23456789012");
+        Autor autor3 = new Autor("Artista 3", "Autor Original 3", "90876543210");
 
         Categoria categoria1 = new Categoria("Categoria 1");
         Categoria categoria2 = new Categoria("Categoria 2");
@@ -26,9 +27,45 @@ public class Principal {
         Categoria categoria5 = new Categoria("Categoria 5");
         Categoria categoria6 = new Categoria("Categoria 6");
 
-        Musica musica1 = new Musica("Música 1", "Letra da Música 1", "2023-01-01", categoria1, 200, new ArrayList<>());
-        Musica musica2 = new Musica("Música 2", "Letra da Música 2", "2023-02-02", categoria2, 180, new ArrayList<>());
-        Musica musica3 = new Musica("Música 3", "Letra da Música 3", "2023-02-02", categoria2, 170, new ArrayList<>());
+        ArrayList<Autor> autores1 = new ArrayList<Autor>();
+        ArrayList<Autor> autores2 = new ArrayList<Autor>();
+        ArrayList<Autor> autores3 = new ArrayList<Autor>();
+
+        autores1.add(autor2);
+        autores1.add(autor1);
+        autores2.add(autor1);
+        autores3.add(autor3);
+
+        Musica musica1 = new Musica("Gang Gang", "abcde", "2003-07-22", categoria1, 230, autores1);
+        Musica musica2 = new Musica("Bang Bang da Anitta", "abcde", "2003-07-22", categoria2, 230, autores1);
+        Musica musica3 = new Musica("Braga Samba", "abcde", "2003-07-22", categoria3, 210, autores2);
+        Musica musica4 = new Musica("Vai malandra", "abcde", "2003-07-22", categoria4, 190, autores3);
+        Musica musica5 = new Musica("Pé de pano", "abcde", "2003-07-22", categoria1, 522, autores2);
+        Musica musica6 = new Musica("Sítio do Pica-Pau", "abcde", "2003-07-22", categoria4, 200, autores3);
+        Musica musica7 = new Musica("Naquela Mesa", "abcde", "2003-07-22", categoria5, 90, autores1);
+        Musica musica8 = new Musica("Não era pra ser", "abcde", "2003-07-22", categoria3, 100, autores3);
+
+        ArrayList<Musica> Conjunto1 = new ArrayList<Musica>();
+        ArrayList<Musica> Conjunto2 = new ArrayList<Musica>();
+        ArrayList<Musica> Conjunto3 = new ArrayList<Musica>();
+
+
+        Playlist playlist1 = new Playlist();
+        Playlist.ConfereCategoria(musica1, Conjunto1, playlist1);
+        Playlist.ConfereCategoria(musica7, Conjunto1, playlist1);
+        Playlist.ConfereCategoria(musica3, Conjunto1, playlist1);
+        playlist1 = new Playlist("2003-07-22", "Meus MPBS", categoria1, Conjunto1);
+        
+        Playlist playlist2 = new Playlist();
+        Playlist.ConfereCategoria(musica4, Conjunto2, playlist2);
+        Playlist.ConfereCategoria(musica6, Conjunto2, playlist2);
+        Playlist.ConfereCategoria(musica7, Conjunto2, playlist2);
+        playlist2 = new Playlist("2019-09-20", "Meus Forros", categoria2, Conjunto2);
+
+        Playlist playlist3 = new Playlist();
+        Playlist.ConfereCategoria(musica5, Conjunto3, playlist3);
+        Playlist.ConfereCategoria(musica8, Conjunto3, playlist3);
+        playlist3 = new Playlist("2003-10-17", "Meus Rocks", categoria3, Conjunto3);
 
 
         // Inicialização da conexão com o banco de dados
@@ -37,10 +74,12 @@ public class Principal {
             AutorDAO autorDAO = new AutorDAO(connection);
             CategoriaDAO categoriaDAO = new CategoriaDAO(connection);
             MusicaDAO musicaDAO = new MusicaDAO(connection);
+            PlaylistDAO playlistDAO = new PlaylistDAO(connection);
 
             // Inserção de dados no banco
             autorDAO.insert(autor1);
             autorDAO.insert(autor2);
+            autorDAO.insert(autor3);
 
             categoriaDAO.insert(categoria1);
             categoriaDAO.insert(categoria2);
@@ -52,6 +91,15 @@ public class Principal {
             musicaDAO.insert(musica1);
             musicaDAO.insert(musica2);
             musicaDAO.insert(musica3);
+            musicaDAO.insert(musica4);
+            musicaDAO.insert(musica5);
+            musicaDAO.insert(musica6);
+            musicaDAO.insert(musica7);
+            musicaDAO.insert(musica8);
+
+            playlistDAO.insert(playlist1);
+            playlistDAO.insert(playlist2);
+            playlistDAO.insert(playlist3);
 
 
             // Consulta de dados do banco
@@ -65,14 +113,14 @@ public class Principal {
             System.out.println("Música consultada: " + musicaConsultada);
 
             // Atualização de dados
-            autor1.setNomeArtistico("Novo Artista");
-            autorDAO.update(autor1);
+            Autor autor1Update = new Autor(1, "Davi", "DaviJCB", "12345678912");
+            autorDAO.update(autor1Update);
 
-            categoria2.setNome("Funk Pesadão");
-            categoriaDAO.update(categoria2);
+            Categoria categoria2Update = new Categoria(2,"Funk Pesadão");
+            categoriaDAO.update(categoria2Update);
 
-            musica3.setTitulo("BUM BUM SHACKALAKA");
-            musicaDAO.update(musica3);
+            Musica musica3Update = new Musica(3, "BUM BUM SHAKALAKA", "a", "2023-02-02", categoria2Update, 200, autores2);
+            musicaDAO.update(musica3Update);
 
             // Deleção de dados
             musicaDAO.delete("Musica 2");

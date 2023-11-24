@@ -44,7 +44,7 @@ public class MusicaDAO {
 
                             try (ResultSet rst = pstm.getGeneratedKeys()) {
                                 while (rst.next()) {
-                                    // Pode ser omitido se não estiver usando auto-incremento
+                                    
                                 }
                             }
                         }
@@ -59,7 +59,7 @@ public class MusicaDAO {
 
     public Musica selectByTitulo(String titulo) {
         try {
-            String sql = "SELECT id_musica, letra, data_lancamento, fk_categoria, duracao FROM musica WHERE titulo = ?";
+            String sql = "SELECT id_musica, letra, data_lancamento, fk_categoria, duracao, nome FROM musica, categoria WHERE titulo = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.setString(1, titulo);
@@ -67,12 +67,13 @@ public class MusicaDAO {
 
                 try (ResultSet rst = pstm.getResultSet()) {
                     if (rst.next()) {
+                        int idMusica = rst.getInt("id_musica");
                         String letra = rst.getString("letra");
                         String dataLancamento = rst.getString("data_lancamento");
-                        String categoriaNome = rst.getString("fk_categoria");
+                        int idCategoria = rst.getInt("fk_categoria");
+                        String categoriaNome = rst.getString("nome");
                         int duracao = rst.getInt("duracao");
-                        int idMusica = rst.getInt("id_musica");
-                        Categoria categoria = new Categoria(categoriaNome);
+                        Categoria categoria = new Categoria(idCategoria, categoriaNome);
                         return new Musica(idMusica, titulo, letra, dataLancamento, categoria, duracao, new ArrayList<>());
                     }
                 }
@@ -86,14 +87,15 @@ public class MusicaDAO {
 
     public void update(Musica musica) {
         try {
-            String sql = "UPDATE musica SET letra = ?, data_lancamento = ?, fk_categoria = ?, duracao = ? WHERE titulo = ?";
+            String sql = "UPDATE musica SET titulo = ?, letra = ?, data_lancamento = ?, fk_categoria = ?, duracao = ? WHERE id_musica = ?";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-                pstm.setString(1, musica.getLetra());
-                pstm.setString(2, musica.getDataLancamento());
-                pstm.setString(3, musica.getCategoria().getNome());
-                pstm.setInt(4, musica.getDuracao());
-                pstm.setString(5, musica.getTitulo());
+                pstm.setString(1, musica.getTitulo());
+                pstm.setString(2, musica.getLetra());
+                pstm.setString(3, musica.getDataLancamento());
+                pstm.setInt(4, musica.getCategoria().getIdCategoria());
+                pstm.setInt(5, musica.getDuracao());
+                pstm.setInt(6, musica.getIdMusica());
 
                 pstm.execute();
             }
@@ -120,41 +122,25 @@ public class MusicaDAO {
         ArrayList<Musica> musicas = new ArrayList<>();
 
         try {
-            String sql = "SELECT id_musica, titulo, letra, data_lancamento, fk_categoria, duracao FROM musica";
+            String sql = "SELECT id_musica, titulo, letra, data_lancamento, fk_categoria, duracao, nome FROM musica, categoria WHERE id_categoria = fk_categoria";
 
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 pstm.execute();
                 ResultSet rst = pstm.getResultSet();
                 while (rst.next()) {
+                    int idMusica = rst.getInt("id_musica");
                     String titulo = rst.getString("titulo");
                     String letra = rst.getString("letra");
                     String dataLancamento = rst.getString("data_lancamento");
-                    String categoriaNome = rst.getString("fk_categoria");
+                    int idCategoria = rst.getInt("fk_categoria");
+                    String categoriaNome = rst.getString("nome");
                     int duracao = rst.getInt("duracao");
-                    int idMusica = rst.getInt("id_musica");
-                    Categoria categoria = new Categoria(categoriaNome);
+                    Categoria categoria = new Categoria(idCategoria, categoriaNome);
                     Musica musica = new Musica(idMusica, titulo, letra, dataLancamento, categoria, duracao, new ArrayList<>());
                     musicas.add(musica);
                 }
             }
             return musicas;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void createMusicaAutor(Musica musica, Autor autor) {
-        try {
-            String sql = "INSERT INTO musica_autor (fk_musica, fk_autor) VALUES (?, ?)";
-
-            try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-
-                pstm.setInt(1, musica.getIdMusica());
-                pstm.setInt(2, autor.getIdAutor());
-
-                pstm.execute();
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
