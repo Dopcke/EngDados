@@ -77,9 +77,7 @@ public class Musica {
         return autores;
     }
 
-    public void setAutores(ArrayList<Autor> autores) {
-        this.autores = autores;
-    }
+
 
     @Override
     public String toString() {

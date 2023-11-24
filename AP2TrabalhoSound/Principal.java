@@ -61,22 +61,22 @@ public class Principal {
         ArrayList<Musica> Conjunto3 = new ArrayList<Musica>();
 
 
-        Playlist playlist1 = new Playlist("2003-07-22", "Meus MPBS", Mpb, Conjunto1);
-
+        Playlist playlist1 = new Playlist();
         Playlist.ConfereCateforia(musica1, Conjunto1, playlist1);
         Playlist.ConfereCateforia(musica7, Conjunto1, playlist1);
         Playlist.ConfereCateforia(musica3, Conjunto1, playlist1);
+        playlist1 = new Playlist("2003-07-22", "Meus MPBS", Mpb, Conjunto1);
         
-        Playlist playlist2 = new Playlist("2019-09-20", "Meus Forros", Forro, Conjunto2);
+        Playlist playlist2 = new Playlist();
         Playlist.ConfereCateforia(musica4, Conjunto2, playlist2);
         Playlist.ConfereCateforia(musica6, Conjunto2, playlist2);
         Playlist.ConfereCateforia(musica7, Conjunto2, playlist2);
+        playlist2 = new Playlist("2019-09-20", "Meus Forros", Forro, Conjunto2);
 
-        Playlist playlist3 = new Playlist("2003-10-17", "Meus Rocks", Rock, Conjunto3);
-
+        Playlist playlist3 = new Playlist();
         Playlist.ConfereCateforia(musica5, Conjunto3, playlist3);
         Playlist.ConfereCateforia(musica8, Conjunto3, playlist3);
-
+        playlist3 = new Playlist("2003-10-17", "Meus Rocks", Rock, Conjunto3);
 
         // Inicialização da conexão com o banco de dados
         ConnectionFactory fabricaDeConexao = new ConnectionFactory();
@@ -89,14 +89,27 @@ public class Principal {
             // Inserção de dados no banco
             autorDAO.insert(autor1);
             autorDAO.insert(autor2);
+            autorDAO.insert(autor3);
+            autorDAO.insert(autor4);
+            autorDAO.insert(autor5);
+            autorDAO.insert(autor6);
+            autorDAO.insert(autor7);
 
             categoriaDAO.insert(POP);
+            categoriaDAO.insert(Samba);
+            categoriaDAO.insert(Mpb);
+            categoriaDAO.insert(Forro);
             categoriaDAO.insert(Rock);
+            categoriaDAO.insert(Pagode);
 
             musicaDAO.insert(musica1);
             musicaDAO.insert(musica2);
             musicaDAO.insert(musica3);
             musicaDAO.insert(musica4);
+            musicaDAO.insert(musica5);
+            musicaDAO.insert(musica6);
+            musicaDAO.insert(musica7);
+            musicaDAO.insert(musica8);
 
             playlistDAO.insert(playlist1);
             playlistDAO.insert(playlist2);

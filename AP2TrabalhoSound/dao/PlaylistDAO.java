@@ -10,6 +10,7 @@ import modelo.Categoria;
 import modelo.Musica;
 import modelo.Playlist;
 
+
 public class PlaylistDAO {
 
     private Connection connection;
@@ -17,9 +18,6 @@ public class PlaylistDAO {
     public PlaylistDAO(Connection connection) {
         this.connection = connection;
     }
-
-
-    
 
     public Playlist selectByTitulo(String titulo) {
         try {
@@ -121,6 +119,7 @@ public class PlaylistDAO {
         }
     }
 
+
     // Método auxiliar para associar músicas à playlist
     private void associateMusicsToPlaylist(Playlist playlist) {
         try {
@@ -129,7 +128,7 @@ public class PlaylistDAO {
             try (PreparedStatement pstm = connection.prepareStatement(sql)) {
                 for (Musica musica : playlist.getMusicas()) {
                     pstm.setString(1, musica.getTitulo());
-                    pstm.setInt(2, playlist.idPlaylist()); 
+                    pstm.setInt(2, playlist.idPlaylist());
                     pstm.addBatch();
                 }
                 pstm.executeBatch();

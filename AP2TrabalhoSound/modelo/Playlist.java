@@ -9,6 +9,10 @@ public class Playlist {
     private Categoria categoriaPermitida;
     private ArrayList<Musica> musicas;
 
+    public Playlist() {
+
+    }    
+
     public Playlist(int idPlaylist, String dataCriacao, String titulo, Categoria categoriaPermitida, ArrayList<Musica> musicas) {
         this.idPlaylist = idPlaylist;
         this.dataCriacao = dataCriacao;
@@ -76,7 +80,7 @@ public class Playlist {
         if (musica.getCategoria() == playlist.getCategoriaPermitida()){
             musicas.add(musica);
         } else{
-            System.err.println("Não é do mesmo gênero");
+            System.err.println("Não é do mesmo gênero" + musica.getIdMusica());
         }
     }
 }
