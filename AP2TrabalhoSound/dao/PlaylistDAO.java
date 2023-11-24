@@ -22,7 +22,6 @@ public class PlaylistDAO {
 
     public void insert(Playlist playlist) {
         try {
-            // Recupera o ID da categoria a partir do nome
             String sqlCategoria = "SELECT id_categoria FROM categoria WHERE nome = ?";
             try (PreparedStatement pstmCategoria = connection.prepareStatement(sqlCategoria)) {
                 pstmCategoria.setString(1, playlist.getCategoriaPermitida().getNome());
@@ -31,12 +30,11 @@ public class PlaylistDAO {
                     if (rstCategoria.next()) {
                         int idCategoria = rstCategoria.getInt("id_categoria");
 
-                        // Agora, com o ID da categoria, é possível inserir a música
                         String sqlMusica = "INSERT INTO playlist (titulo, data_criacao, fk_categoria) VALUES (?, ?, ?)";
                         try (PreparedStatement pstm = connection.prepareStatement(sqlMusica, Statement.RETURN_GENERATED_KEYS)) {
                             pstm.setString(1, playlist.getTitulo());
                             pstm.setString(2, playlist.getDataCriacao());
-                            pstm.setInt(3, idCategoria); // Utiliza o ID da categoria
+                            pstm.setInt(3, idCategoria); 
 
                             pstm.execute();
 
@@ -49,24 +47,6 @@ public class PlaylistDAO {
                         }
                     }
                 }
-            }
-            associateMusicsToPlaylist(playlist);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void associateMusicsToPlaylist(Playlist playlist) {
-        try {
-            String sql = "INSERT INTO musica_playlist (fk_musica, fk_playlist) VALUES (?, ?)";
-            
-            try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-                for (Musica musica : playlist.getMusicas()) {
-                    pstm.setInt(1, musica.getIdMusica());
-                    pstm.setInt(2, playlist.getIdPlaylist());
-                    pstm.addBatch();
-                }
-                pstm.executeBatch();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

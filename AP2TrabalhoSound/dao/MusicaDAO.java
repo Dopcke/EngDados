@@ -21,7 +21,6 @@ public class MusicaDAO {
 
     public void insert(Musica musica) {
         try {
-            // Recupera o ID da categoria a partir do nome
             String sqlCategoria = "SELECT id_categoria FROM categoria WHERE nome = ?";
             try (PreparedStatement pstmCategoria = connection.prepareStatement(sqlCategoria)) {
                 pstmCategoria.setString(1, musica.getCategoria().getNome());
@@ -30,13 +29,12 @@ public class MusicaDAO {
                     if (rstCategoria.next()) {
                         int idCategoria = rstCategoria.getInt("id_categoria");
     
-                        // Agora, com o ID da categoria, é possível inserir a música
                         String sqlMusica = "INSERT INTO musica (titulo, letra, data_lancamento, fk_categoria, duracao) VALUES (?, ?, ?, ?, ?)";
                         try (PreparedStatement pstm = connection.prepareStatement(sqlMusica, Statement.RETURN_GENERATED_KEYS)) {
                             pstm.setString(1, musica.getTitulo());
                             pstm.setString(2, musica.getLetra());
                             pstm.setString(3, musica.getDataLancamento());
-                            pstm.setInt(4, idCategoria); // Utiliza o ID da categoria
+                            pstm.setInt(4, idCategoria);
                             pstm.setInt(5, musica.getDuracao());
     
                             pstm.execute();

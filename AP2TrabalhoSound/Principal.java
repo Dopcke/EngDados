@@ -17,8 +17,8 @@ public class Principal {
     public static void main(String[] args) {
         // Criação de objetos de exemplo
         Autor autor1 = new Autor("Davi", "David Guetta", "12345678901");
-        Autor autor2 = new Autor("João", "João Paulo", "23456789012");
-        Autor autor3 = new Autor("Daniel", "Studart", "90876543210");
+        Autor autor2 = new Autor("João", "JP", "23456789012");
+        Autor autor3 = new Autor("Daniel", "Stu", "90876543210");
 
         Categoria categoria1 = new Categoria("MPB");
         Categoria categoria2 = new Categoria("Forró");
@@ -77,9 +77,9 @@ public class Principal {
             PlaylistDAO playlistDAO = new PlaylistDAO(connection);
 
             // Inserção de dados no banco
-            autorDAO.insert(autor1);
-            autorDAO.insert(autor2);
-            autorDAO.insert(autor3);
+            autorDAO.insert(autor1, null);
+            autorDAO.insert(autor2, null);
+            autorDAO.insert(autor3, null);
 
             categoriaDAO.insert(categoria1);
             categoriaDAO.insert(categoria2);

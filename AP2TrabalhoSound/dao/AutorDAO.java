@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import modelo.Autor;
+import modelo.Musica;
 
 public class AutorDAO {
 
@@ -17,7 +18,7 @@ public class AutorDAO {
         this.connection = connection;
     }
 
-    public void insert(Autor autor) {
+    public void insert(Autor autor, Musica musica) {
         try {
             String sql = "INSERT INTO autor (cpf, nome_original, nome_artistico) VALUES (?, ?, ?)";
 
@@ -30,7 +31,6 @@ public class AutorDAO {
 
                 try (ResultSet rst = pstm.getGeneratedKeys()) {
                     while (rst.next()) {
-                        // Pode ser omitido se não estiver usando auto-incremento
                     }
                 }
             }
@@ -56,6 +56,7 @@ public class AutorDAO {
                     }
                 }
             }
+            
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

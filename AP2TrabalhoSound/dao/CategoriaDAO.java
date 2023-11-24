@@ -28,7 +28,6 @@ public class CategoriaDAO {
 
                 try (ResultSet rst = pstm.getGeneratedKeys()) {
                     while (rst.next()) {
-                        // Pode ser omitido se não estiver usando auto-incremento
                     }
                 }
             }
